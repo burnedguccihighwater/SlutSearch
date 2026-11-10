@@ -1,0 +1,16 @@
+{
+  "name": "slutsearch-telegram-miniapp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SlutSearch Telegram Mini App MVP with tag search, uploads, bookmarks and playlists",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "DEV_AUTH=1 AUTO_APPROVE_UPLOADS=1 node server.js",
+    "check": "node --check server.js && node --check public/app.js",
+    "test": "node --test tests/smoke.mjs"
+  }
+}
