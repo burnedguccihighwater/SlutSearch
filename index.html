@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#080c12" />
+  <meta name="color-scheme" content="dark" />
+  <title>SlutSearch &lt;3</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <button class="icon-btn" id="menuBtn" aria-label="Открыть меню"><span class="hamburger"><i></i><i></i><i></i></span></button>
+        <button class="brand" data-route="home"><span class="brand-mark">✳</span> SlutSearch <b>&lt;3</b></button>
+        <div class="header-actions">
+          <button class="icon-btn add" id="uploadBtn" aria-label="Загрузить медиа"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></button>
+          <button class="avatar avatar-small" id="avatarBtn" aria-label="Открыть профиль">S</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="sidebar-backdrop hidden" id="sideBackdrop"></div>
+    <aside class="sidebar" id="sidebar" aria-label="Главное меню" aria-hidden="true">
+      <div class="sidebar-header"><div class="sidebar-brand">SlutSearch <b>&lt;3</b></div><button id="sideClose" class="icon-btn" aria-label="Закрыть меню">×</button></div>
+      <div class="sidebar-label">NAVIGATION</div>
+      <nav class="side-nav">
+        <button data-route="home" class="nav-item active"><span>⌂</span> Home</button>
+        <button data-route="hot" class="nav-item"><span>✦</span> Hot</button>
+        <button data-route="playlists" class="nav-item"><span>▤</span> Playlists</button>
+        <button data-route="login" class="nav-item"><span>⇥</span> Login</button>
+      </nav>
+      <div class="side-bottom"><button data-route="upload" class="primary full">+ Upload media</button><p>SlutSearch <3 · 18+ only</p></div>
+    </aside>
+
+    <main class="container">
+      <section class="page active" id="page-home">
+        <div class="eyebrow">YOUR PRIVATE MEDIA LIBRARY</div>
+        <div class="page-heading"><div><h1>Explore.</h1><p>Найди именно то, что хочешь.</p></div><span class="blue-star">✳</span></div>
+        <div class="panel search-panel">
+          <label class="search-line" for="tagInput"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/></svg><input id="tagInput" autocomplete="off" placeholder="Search tags..." maxlength="40" /><button class="search-add" id="addTagBtn" aria-label="Добавить тег">+</button></label>
+          <div id="searchTags" class="tag-selected"></div>
+          <div class="search-meta"><span>SEARCH UP TO 5 TAGS</span><span id="tagCounter">0 / 5</span></div>
+          <div class="panel-divider"></div>
+          <div class="section-title inline-between"><h2>Hot tags</h2><button id="expandTags" class="text-link">Show more</button></div>
+          <div id="hotTags" class="chips hot-tags"></div>
+        </div>
+        <div class="panel filters-panel">
+          <button class="filters-title" id="filtersToggle"><span><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/></svg> Filters and settings</span><span class="chevron" id="filterChevron">⌃</span></button>
+          <div class="filter-content" id="filterContent">
+            <div class="filter-section toggle-line"><span>Hide AI-generated posts</span><label class="switch"><input type="checkbox" id="excludeAI"/><span class="switch-ui"></span></label></div>
+            <div class="filter-section"><h3>Media type</h3><div class="chips filter-options" id="mediaOptions"><button data-value="all" class="chip chosen">All</button><button data-value="images" class="chip">Images</button><button data-value="videos" class="chip">Videos</button></div></div>
+            <div class="filter-section"><h3>Sort</h3><div class="chips filter-options" id="sortOptions"><button data-value="latest" class="chip chosen">Latest</button><button data-value="top" class="chip">Top rated</button><button data-value="views" class="chip">Most viewed</button><button data-value="shuffle" class="chip">Shuffle</button><button data-value="oldest" class="chip">Oldest</button></div></div>
+            <div class="panel-divider"></div>
+            <div class="filter-section"><h3>Grid layout</h3><div class="chips filter-options" id="layoutOptions"><button data-value="grid" class="chip chosen">Grid</button><button data-value="masonry" class="chip">Masonry</button></div></div>
+          </div>
+        </div>
+        <div class="section-header"><div><div class="eyebrow">DISCOVER</div><h2>Latest uploads <span id="postCount" class="muted-count"></span></h2></div><button class="subtle-btn" data-route="upload">+ Upload</button></div>
+        <div class="gallery" id="homeGallery"></div><button class="load-more hidden" id="loadMore">Load more</button>
+      </section>
+
+      <section class="page" id="page-hot">
+        <div class="eyebrow">TRENDING NOW</div><div class="page-heading"><div><h1>Hot.</h1><p>Самые популярные публикации.</p></div><span class="blue-star">✦</span></div>
+        <div class="chips filter-options hot-sort" id="hotSort"><button class="chip chosen" data-value="views">Most viewed</button><button class="chip" data-value="top">Top rated</button><button class="chip" data-value="latest">Latest</button></div>
+        <div class="gallery" id="hotGallery"></div><button class="load-more hidden" id="hotLoadMore">Load more</button>
+      </section>
+
+      <section class="page" id="page-playlists">
+        <div class="eyebrow">YOUR COLLECTIONS</div><div class="page-heading"><div><h1>Playlists.</h1><p>Сохраняй подборки и возвращайся к ним.</p></div><span class="blue-star">▤</span></div>
+        <button class="primary" id="createPlaylistBtn">+ Create playlist</button>
+        <div id="playlistList" class="playlist-list"></div>
+        <div class="hidden" id="playlistDetail"><button id="playlistBack" class="text-link back">← Back to playlists</button><h2 id="playlistDetailName"></h2><div id="playlistGallery" class="gallery"></div></div>
+      </section>
+
+      <section class="page" id="page-profile">
+        <div class="profile-cover"><div class="cover-stars">✳ ✦ ✳</div><div class="cover-caption">SlutSearch &lt;3</div></div>
+        <div class="profile-summary"><div id="profileAvatar" class="avatar avatar-big">S</div><div><h1 id="profileName">User</h1><p id="profileHandle">@telegram</p></div><button id="profileSettings" class="subtle-btn">Settings</button></div>
+        <div class="profile-stats"><div><strong id="profilePosts">0</strong><span>Posts</span></div><div><strong id="profileBookmarks">0</strong><span>Bookmarks</span></div><div><strong id="profilePlaylists">0</strong><span>Playlists</span></div></div>
+        <div class="profile-tabs" id="profileTabs"><button data-value="posts" class="selected">My uploads</button><button data-value="bookmarks">Bookmarks</button><button data-value="playlists">Playlists</button></div>
+        <div id="profileGallery" class="gallery"></div><div id="profilePlaylistList" class="playlist-list hidden"></div>
+      </section>
+
+      <section class="page" id="page-upload">
+        <div class="eyebrow">SHARE WITH THE COMMUNITY</div><div class="page-heading"><div><h1>Upload.</h1><p>Добавь медиа и теги для поиска.</p></div><span class="blue-star">↥</span></div>
+        <form id="uploadForm" class="panel upload-form">
+          <label for="mediaFile" class="dropzone" id="dropzone"><input type="file" id="mediaFile" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" required /><span class="drop-icon">↥</span><strong id="fileLabel">Choose image or video</strong><small>JPG, PNG, WEBP, GIF, MP4, WEBM, MOV · 50 MB max</small></label>
+          <div class="preview" id="mediaPreview"></div>
+          <label class="form-label">Title <input type="text" id="uploadTitle" placeholder="Title of publication" maxlength="100" required /></label>
+          <label class="form-label">Tags <span class="required">(required)</span><input type="text" id="uploadTags" placeholder="e.g. cosplay, illustration, blue hair" required /></label>
+          <p class="field-hint">Разделяй теги запятыми. От 1 до 12 тегов. Для поиска можно выбрать не более 5.</p>
+          <label class="form-checkbox"><input id="uploadAI" type="checkbox" /> AI-generated media</label>
+          <label class="form-checkbox"><input id="uploadRights" type="checkbox" required /> Подтверждаю, что мне 18+, все реальные участники совершеннолетние и согласны на публикацию, и у меня есть права на материал.</label>
+          <p class="field-hint">Публикации проходят модерацию. Материалы с несовершеннолетними и без согласия запрещены.</p>
+          <button class="primary full" type="submit" id="submitUpload">Publish media</button>
+        </form>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal" id="modal" role="dialog" aria-modal="true"><div class="modal-top"><h2 id="modalTitle">Details</h2><button id="modalClose" class="icon-btn">×</button></div><div id="modalBody"></div></div></div>
+    <div class="age-gate hidden" id="ageGate"><div class="age-box"><div class="age-logo">✳</div><h2>SlutSearch &lt;3</h2><p>Платформа предназначена только для совершеннолетних (18+). Для продолжения подтвердите возраст.</p><button class="primary full" id="confirmAge">Мне есть 18 лет</button><p class="age-note">Подтверждение не заменяет юридически обязательную проверку возраста.</p></div></div>
+  </div>
+</body>
+</html>
